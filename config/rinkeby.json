@@ -1,0 +1,20 @@
+{
+  "network": "rinkeby",
+  "staking": {
+    "address": "0xD4204408097e26F595b377fdE6bb5F0Ae641d9Bf",
+    "startBlock": 9533523
+  },
+  "stakingHelper": {
+    "address": "0x9c8e53C5b1cc6834a29588B659199f411640b038",
+    "startBlock": 9533523
+  },
+  "squidEthLPBond": {
+    "address": "0x481b3bc88d1628cb3132295dcfbf33711ab7d08f",
+    "startBlock": 9533523
+  },
+  "sSQUID": {
+    "address": "0xe8fb1c2Bd5DCC22d4Cd418a85F5B9cc339e8AD47",
+    "startBlock": 9533523
+  }
+
+}

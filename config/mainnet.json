@@ -1,0 +1,32 @@
+{
+  "network": "mainnet",
+  "treasury": {
+    "address": "0x61d8a57b3919e9F4777C80b6CF1138962855d2Ca",
+    "startBlock": 13627604
+  },
+  "staking": {
+    "address": "0x5895B13Da9BEB11e36136817cdcf3c4fcb16aaeA",
+    "startBlock": 13511950
+  },
+  "stakingHelper": {
+    "address": "0x3eC8d9C851552b8917182F39F6014e14e6EE0BfC",
+    "startBlock": 13511960
+  },
+  "squidEthLPBond": {
+    "address": "0x5ab2493d75cbccd0762417839c83ab6b567d2f71",
+    "startBlock": 13513049
+  },
+  "wETHBond": {
+    "address": "0x8f9b609ea2179262a7a672553d6f78ec83215ee9",
+    "startBlock": 13549353
+  },
+  "wETHBondV2": {
+    "address": "0xd9cf92F1e3758EdE8bb47e37CAc7927dFbd54c12",
+    "startBlock": 13644776
+  },
+  "sSQUID": {
+    "address": "0x9d49BfC921F36448234b0eFa67B5f91b3C691515",
+    "startBlock": 13511944
+  }
+}
+

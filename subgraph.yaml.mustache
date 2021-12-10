@@ -1,0 +1,220 @@
+specVersion: 0.0.2
+description: Squid DAO Subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Treasury
+    network: {{network}}
+    source:
+      address: '{{treasury.address}}'
+      abi: Treasury
+      startBlock: {{treasury.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ProtocolMetric
+      abis:
+        - name: Treasury
+          file: ./abis/Treasury.json
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: BondDepository
+          file: ./abis/BondDepository.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: ReservesManaged(indexed address,uint256)
+          handler: handleReservesManaged
+      file: ./src/Treasury.ts
+  #Staking Contract V2
+  - kind: ethereum/contract
+    name: OlympusStakingV2
+    network: {{network}}
+    source:
+      address: '{{staking.address}}'
+      abi: OlympusStakingV2
+      startBlock: {{staking.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OlympusStakingV2
+      abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: BondDepository
+          file: ./abis/BondDepository.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      callHandlers:
+        - function: stake(uint256,address)
+          handler: handleStake
+        - function: unstake(uint256,bool)
+          handler: handleUnstake
+      file: ./src/OlympusStakingV2.ts
+  #Staking Contract V2 Helper
+  - kind: ethereum/contract
+    name: OlympusStakingV2Helper
+    network: {{network}}
+    source:
+      address: '{{stakingHelper.address}}'
+      abi: OlympusStakingV2Helper
+      startBlock: {{stakingHelper.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OlympusStakingV2Helper
+      abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV2Helper
+          file: ./abis/OlympusStakingV2Helper.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: BondDepository
+          file: ./abis/BondDepository.json
+      callHandlers:
+        - function: stake(uint256)
+          handler: handleStake
+      file: ./src/OlympusStakingV2Helper.ts
+  - kind: ethereum/contract
+    name: SQUIDETHLPBond
+    network: {{network}}
+    source:
+      address: '{{squidEthLPBond.address}}'
+      abi: BondDepository
+      startBlock: {{squidEthLPBond.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - SQUIDETHBond
+      abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: BondDepository
+          file: ./abis/BondDepository.json
+      callHandlers:
+        - function: deposit(uint256,uint256,address)
+          handler: handleDeposit
+        - function: redeem(address,bool)
+          handler: handleRedeem
+      file: ./src/SQUIDETHLPBond.ts
+  - kind: ethereum/contract
+    name: WETHBond
+    network: {{network}}
+    source:
+      address: '{{wETHBond.address}}'
+      abi: BondDepository
+      startBlock: {{wETHBond.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - SQUIDETHBond
+      abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: BondDepository
+          file: ./abis/BondDepository.json
+      callHandlers:
+        - function: deposit(uint256,uint256,address)
+          handler: handleDeposit
+        - function: redeem(address,bool)
+          handler: handleRedeem
+      file: ./src/WETHBond.ts
+  - kind: ethereum/contract
+    name: WETHBondV2
+    network: {{network}}
+    source:
+      address: '{{wETHBondV2.address}}'
+      abi: BondDepository
+      startBlock: {{wETHBondV2.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - SQUIDETHBond
+      abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: BondDepository
+          file: ./abis/BondDepository.json
+      callHandlers:
+        - function: deposit(uint256,uint256,address)
+          handler: handleDeposit
+        - function: redeem(address,bool)
+          handler: handleRedeem
+      file: ./src/WETHBondV2.ts
+  #sOHM
+  - kind: ethereum/contract
+    name: sOlympusERC20V2
+    network: {{network}}
+    source:
+      address: '{{sSQUID.address}}'
+      abi: sOlympusERC20V2
+      startBlock: {{sSQUID.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - sOlympusERC20V2
+      abis:
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+      callHandlers:
+        - function: rebase(uint256,uint256)
+          handler: rebaseFunction
+      file: ./src/sOlympusERC20V2.ts
